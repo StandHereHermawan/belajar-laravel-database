@@ -21,3 +21,14 @@ CREATE TABLE counters
 INSERT INTO counters(id, counter) values ('sample', 0);
 
 select * from counters;
+
+CREATE TABLE products
+(
+    id          VARCHAR(100)    NOT NULL PRIMARY KEY,
+    name        VARCHAR(100)    NOT NULL,
+    description text,
+    price       int             NOT NULL,
+    category_id VARCHAR(100)    NOT NULL,
+    created_at  timestamp,
+    constraint  fk_category_id foreign key (category_id) references categories (id)
+) engine innodb;
