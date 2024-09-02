@@ -52,7 +52,30 @@ class GroupingTest extends TestCase
 
     public function test_where(): void
     {
-        $this->test_insert();
+        DB::table("categories")
+            ->insert([
+                'id' => 'SMARTPHONE',
+                'name' => 'Smartphone',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'FOOD',
+                'name' => 'Food',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'LAPTOP',
+                'name' => 'Laptop',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'FASHION',
+                'name' => 'Fashion',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
 
         $collection = DB::table("categories")->where(function (Builder $builder) {
             $builder->where('id', '=', 'SMARTPHONE');
@@ -70,7 +93,39 @@ class GroupingTest extends TestCase
 
     public function test_insert_table_products(): void
     {
-        $this->test_where();
+        DB::table("categories")
+            ->insert([
+                'id' => 'SMARTPHONE',
+                'name' => 'Smartphone',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'FOOD',
+                'name' => 'Food',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'LAPTOP',
+                'name' => 'Laptop',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'FASHION',
+                'name' => 'Fashion',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+
+        $collection = DB::table("categories")->where(function (Builder $builder) {
+            $builder->where('id', '=', 'SMARTPHONE');
+            $builder->orWhere('id', '=', 'LAPTOP');
+        })->get();
+        // SELECT * FROM categories WHERE (id = smartphone OR id = laptop)
+
+        self::assertNotNull($collection);
+        self::assertCount(2, $collection);
 
         DB::table("products")->insert([
             'id' => '1',
@@ -86,36 +141,6 @@ class GroupingTest extends TestCase
             'price' => 15000000,
             'description' => 'Samsung Flagship'
         ]);
-        // for ($i = 3; $i < 9; $i++) {
-        //     DB::table("products")->insert([
-        //         'id' => $i,
-        //         'name' => 'Baju Model ' . $i,
-        //         'category_id' => 'FASHION',
-        //         'price' => 75000 * $i,
-        //         'description' => 'Baju Model' . $i
-        //     ]);
-        // }
-
-        // $collection = DB::table("products")->select([
-        //     'id',
-        //     'name',
-        //     'description',
-        //     'created_at',
-        //     'category_id',
-        //     'price'
-        // ])->get();
-
-        // self::assertNotNull($collection);
-
-        // for ($i = 9; $i <= 12; $i++) {
-        //     DB::table("products")->insert([
-        //         'id' => $i,
-        //         'name' => 'Celana Model ' . $i,
-        //         'category_id' => 'FASHION',
-        //         'price' => 35000 + (500 * $i),
-        //         'description' => 'Celana Model ' . $i
-        //     ]);
-        // }
 
         $collection = DB::table("products")->select([
             'id',
@@ -131,25 +156,75 @@ class GroupingTest extends TestCase
 
     public function test_insert_product_food(): void
     {
+        DB::table("categories")
+            ->insert([
+                'id' => 'SMARTPHONE',
+                'name' => 'Smartphone',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'FOOD',
+                'name' => 'Food',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'LAPTOP',
+                'name' => 'Laptop',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'FASHION',
+                'name' => 'Fashion',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+
+        $collection = DB::table("categories")->where(function (Builder $builder) {
+            $builder->where('id', '=', 'SMARTPHONE');
+            $builder->orWhere('id', '=', 'LAPTOP');
+        })->get();
+        // SELECT * FROM categories WHERE (id = smartphone OR id = laptop)
+
+        self::assertNotNull($collection);
+        self::assertCount(2, $collection);
+
+        DB::table("products")->insert([
+            'id' => '1',
+            'name' => 'Iphone 14 Pro Max',
+            'category_id' => 'SMARTPHONE',
+            'price' => 13000000,
+            'description' => 'Apple Iphone 14 Pro Max'
+        ]);
+        DB::table("products")->insert([
+            'id' => '2',
+            'name' => 'Samsung Galaxy S24 Ultra',
+            'category_id' => 'SMARTPHONE',
+            'price' => 15000000,
+            'description' => 'Samsung Flagship'
+        ]);
+
+        $collection = DB::table("products")->select([
+            'id',
+            'name',
+            'description',
+            'created_at',
+            'category_id',
+            'price'
+        ])->get();
+
+        self::assertNotNull($collection);
+
         for ($i = 3; $i <= 4; $i++) {
             DB::table("products")->insert([
-                'id' => $i,
+                'id' => "$i",
                 'name' => 'Makanan instant Model ' . $i,
                 'category_id' => 'FOOD',
                 'price' => 5000 + (500 * $i),
                 'description' => 'Makanan instant Model ' . $i
             ]);
         }
-
-        // for ($i = 13; $i <= 20; $i++) {
-        //     DB::table("products")->insert([
-        //         'id' => $i,
-        //         'name' => 'Makanan instant Model ' . $i,
-        //         'category_id' => 'FOOD',
-        //         'price' => 5000 + (500 * $i),
-        //         'description' => 'Makanan instant Model ' . $i
-        //     ]);
-        // }
 
         $collection = DB::table("products")->select([
             'id',
@@ -165,8 +240,86 @@ class GroupingTest extends TestCase
 
     public function test_grouping(): void
     {
-        $this->test_insert_table_products();
-        $this->test_insert_product_food();
+        DB::table("categories")
+            ->insert([
+                'id' => 'SMARTPHONE',
+                'name' => 'Smartphone',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'FOOD',
+                'name' => 'Food',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'LAPTOP',
+                'name' => 'Laptop',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'FASHION',
+                'name' => 'Fashion',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+
+        $collection = DB::table("categories")->where(function (Builder $builder) {
+            $builder->where('id', '=', 'SMARTPHONE');
+            $builder->orWhere('id', '=', 'LAPTOP');
+        })->get();
+        // SELECT * FROM categories WHERE (id = smartphone OR id = laptop)
+
+        self::assertNotNull($collection);
+        self::assertCount(2, $collection);
+
+        DB::table("products")->insert([
+            'id' => '1',
+            'name' => 'Iphone 14 Pro Max',
+            'category_id' => 'SMARTPHONE',
+            'price' => 13000000,
+            'description' => 'Apple Iphone 14 Pro Max'
+        ]);
+        DB::table("products")->insert([
+            'id' => '2',
+            'name' => 'Samsung Galaxy S24 Ultra',
+            'category_id' => 'SMARTPHONE',
+            'price' => 15000000,
+            'description' => 'Samsung Flagship'
+        ]);
+
+        $collection = DB::table("products")->select([
+            'id',
+            'name',
+            'description',
+            'created_at',
+            'category_id',
+            'price'
+        ])->get();
+
+        self::assertNotNull($collection);
+
+        for ($i = 3; $i <= 4; $i++) {
+            DB::table("products")->insert([
+                'id' => "$i",
+                'name' => 'Makanan instant Model ' . $i,
+                'category_id' => 'FOOD',
+                'price' => 5000 + (500 * $i),
+                'description' => 'Makanan instant Model ' . $i
+            ]);
+        }
+
+        $collection = DB::table("products")->select([
+            'id',
+            'name',
+            'description',
+            'created_at',
+            'category_id',
+            'price'
+        ])->get();
+
+        self::assertNotNull($collection);
 
         $collection = DB::table("products")
             ->select('category_id', DB::raw('count(*) as total_product'))
@@ -187,8 +340,86 @@ class GroupingTest extends TestCase
 
     public function test_having(): void
     {
-        $this->test_insert_table_products();
-        $this->test_insert_product_food();
+        DB::table("categories")
+        ->insert([
+            'id' => 'SMARTPHONE',
+            'name' => 'Smartphone',
+            'created_at' => '2023-12-03 11:23:32'
+        ]);
+    DB::table("categories")
+        ->insert([
+            'id' => 'FOOD',
+            'name' => 'Food',
+            'created_at' => '2023-12-03 11:23:32'
+        ]);
+    DB::table("categories")
+        ->insert([
+            'id' => 'LAPTOP',
+            'name' => 'Laptop',
+            'created_at' => '2023-12-03 11:23:32'
+        ]);
+    DB::table("categories")
+        ->insert([
+            'id' => 'FASHION',
+            'name' => 'Fashion',
+            'created_at' => '2023-12-03 11:23:32'
+        ]);
+
+    $collection = DB::table("categories")->where(function (Builder $builder) {
+        $builder->where('id', '=', 'SMARTPHONE');
+        $builder->orWhere('id', '=', 'LAPTOP');
+    })->get();
+    // SELECT * FROM categories WHERE (id = smartphone OR id = laptop)
+
+    self::assertNotNull($collection);
+    self::assertCount(2, $collection);
+
+    DB::table("products")->insert([
+        'id' => '1',
+        'name' => 'Iphone 14 Pro Max',
+        'category_id' => 'SMARTPHONE',
+        'price' => 13000000,
+        'description' => 'Apple Iphone 14 Pro Max'
+    ]);
+    DB::table("products")->insert([
+        'id' => '2',
+        'name' => 'Samsung Galaxy S24 Ultra',
+        'category_id' => 'SMARTPHONE',
+        'price' => 15000000,
+        'description' => 'Samsung Flagship'
+    ]);
+
+    $collection = DB::table("products")->select([
+        'id',
+        'name',
+        'description',
+        'created_at',
+        'category_id',
+        'price'
+    ])->get();
+
+    self::assertNotNull($collection);
+
+    for ($i = 3; $i <= 4; $i++) {
+        DB::table("products")->insert([
+            'id' => "$i",
+            'name' => 'Makanan instant Model ' . $i,
+            'category_id' => 'FOOD',
+            'price' => 5000 + (500 * $i),
+            'description' => 'Makanan instant Model ' . $i
+        ]);
+    }
+
+    $collection = DB::table("products")->select([
+        'id',
+        'name',
+        'description',
+        'created_at',
+        'category_id',
+        'price'
+    ])->get();
+
+    self::assertNotNull($collection);
 
         $collection = DB::table("products")
             ->select('category_id', DB::raw('count(*) as total_product'))

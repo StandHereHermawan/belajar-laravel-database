@@ -52,7 +52,30 @@ class PaginationCursorTest extends TestCase
 
     public function test_where(): void
     {
-        $this->test_insert();
+        DB::table("categories")
+            ->insert([
+                'id' => 'SMARTPHONE',
+                'name' => 'Smartphone',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'FOOD',
+                'name' => 'Food',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'LAPTOP',
+                'name' => 'Laptop',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'FASHION',
+                'name' => 'Fashion',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
 
         $collection = DB::table("categories")->where(function (Builder $builder) {
             $builder->where('id', '=', 'SMARTPHONE');
@@ -70,7 +93,30 @@ class PaginationCursorTest extends TestCase
 
     public function test_insert_table_products(): void
     {
-        $this->test_where();
+        DB::table("categories")
+            ->insert([
+                'id' => 'SMARTPHONE',
+                'name' => 'Smartphone',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'FOOD',
+                'name' => 'Food',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'LAPTOP',
+                'name' => 'Laptop',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'FASHION',
+                'name' => 'Fashion',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
 
         DB::table("products")->insert([
             'id' => '1',
@@ -101,6 +147,46 @@ class PaginationCursorTest extends TestCase
 
     public function test_insert_product_food(): void
     {
+        DB::table("categories")
+            ->insert([
+                'id' => 'SMARTPHONE',
+                'name' => 'Smartphone',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'FOOD',
+                'name' => 'Food',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'LAPTOP',
+                'name' => 'Laptop',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+        DB::table("categories")
+            ->insert([
+                'id' => 'FASHION',
+                'name' => 'Fashion',
+                'created_at' => '2023-12-03 11:23:32'
+            ]);
+
+        DB::table("products")->insert([
+            'id' => '1',
+            'name' => 'Iphone 14 Pro Max',
+            'category_id' => 'SMARTPHONE',
+            'price' => 13000000,
+            'description' => 'Apple Iphone 14 Pro Max'
+        ]);
+        DB::table("products")->insert([
+            'id' => '2',
+            'name' => 'Samsung Galaxy S24 Ultra',
+            'category_id' => 'SMARTPHONE',
+            'price' => 15000000,
+            'description' => 'Samsung Flagship'
+        ]);
+
         for ($i = 3; $i <= 4; $i++) {
             DB::table("products")->insert([
                 'id' => $i,

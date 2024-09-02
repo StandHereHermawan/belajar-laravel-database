@@ -14,7 +14,9 @@ class UpdateTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        DB::delete("DELETE FROM products");
         DB::delete("delete FROM categories");
+        DB::delete("DELETE FROM counters");
     }
 
     public function test_insert(): void
@@ -96,6 +98,12 @@ class UpdateTest extends TestCase
 
     public function test_increment(): void
     {
+        DB::table("counters")
+            ->insert([
+                'id' => 'sample',
+                'counter' => 0
+            ]);
+
         DB::table("counters")->where('id', '=', 'sample')->increment('counter', 1);
 
         $collection = DB::table("counters")->where('id', '=', 'sample')->get();

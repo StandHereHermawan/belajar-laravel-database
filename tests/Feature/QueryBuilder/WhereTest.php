@@ -14,6 +14,7 @@ class WhereTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        DB::delete("DELETE FROM products");
         DB::delete("DELETE FROM categories");
     }
 
@@ -46,6 +47,8 @@ class WhereTest extends TestCase
                 'name' => 'Fashion',
                 'created_at' => '2023-12-03 11:23:32'
             ]);
+
+        self::assertTrue(true);
     }
 
     public function test_where(): void
