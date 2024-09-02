@@ -40,3 +40,5 @@ drop TABLE counters;
 drop TABLE categories;
 
 show tables;
+
+select * from migrations;
